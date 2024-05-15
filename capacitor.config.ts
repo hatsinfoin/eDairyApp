@@ -5,7 +5,11 @@ const config: CapacitorConfig = {
   appName: 'eDairyApp',
   webDir: 'www',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'http',
+   /* cleartext: true,
+    allowNavigation: [
+      "http://test.test.id/api/*"
+    ]*/
   }
 };
 

@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-button color="medium" (click)="cancel()">Cancel</ion-button> -->
+    </ion-buttons>
+    <ion-title style="text-align: center;">Acadamic Calender </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <div class="main_content_div" *ngFor="let topic of academicStdTopics">
+
+    <div class="lower-div">
+      <ion-label class="head-title"> {{ topic.acdTopicName }}</ion-label>
+      <ion-toolbar class="limit_card" *ngFor="let subTopic of topic.topics">
+        <div class="progress" slot="start">
+        </div>
+
+        <div class="title">
+
+          <div class="balance">
+            <ion-grid>
+
+              <ion-row>
+                <ion-label class="dollar">Topic Nameee: {{ subTopic.topicName }}</ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-col class="col-smallFont"> <ion-label class="title">Topic: {{ subTopic.topicID }}</ion-label>
+                </ion-col>
+                <ion-col class="col-smallFont" >Start Date: {{ subTopic.startDate }}</ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col class="col-smallFont"> Current Status: {{ subTopic.topicStatus }}
+                </ion-col>
+                <ion-col class="col-smallFont"> Target Date: {{ subTopic.endDate }}</ion-col>
+              </ion-row>
+              <ion-row>
+                Persentage Completed: {{ subTopic.persentageComp }}%
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>
+      </ion-toolbar>
+
+
+    </div>
+  </div>
+  <!-- 
+
+  <ion-row class="paddingZero">
+
+    <ion-col class="paddingZero" size="12" *ngFor="let topic of academicStdTopics">
+      <ion-card>
+        <ion-card-header class="paddingZero">
+          {{ topic.acdTopicName }}
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list class="paddingZero">
+            <ion-item *ngFor="let subTopic of topic.topics">
+              <ion-card-subtitle>{{ subTopic.topicID }}</ion-card-subtitle>
+              <ion-label>{{ subTopic.topicName }}</ion-label>
+              <ion-note slot="end">Status: {{ subTopic.topicStatus }}</ion-note>
+              <ion-note slot="end">Start: {{ subTopic.startDate }}</ion-note>
+              <ion-note slot="end">End: {{ subTopic.endDate }}</ion-note>
+              <ion-note slot="end">Completion %: {{ subTopic.persentageComp }}</ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row> -->
+
+
+</ion-content>

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-button color="medium" (click)="cancel()">Cancel</ion-button> -->
+    </ion-buttons>
+    <ion-title style="text-align: center;">Notice Board</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+
+<form [formGroup]="noticeBoardForm" (ngSubmit)="onSubmit()">
+  
+
+  <ion-item>
+    <ion-label position="floating">noticeDepartment</ion-label>
+    <ion-input formControlName="noticeDepartment"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">noticeTitle</ion-label>
+    <ion-input formControlName="noticeTitle"></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">noticeDetails</ion-label>
+    <ion-input formControlName="noticeDetails"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">noticeBy </ion-label>
+    <ion-input formControlName="noticeBy"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">noticeStartDate </ion-label>
+    <ion-input formControlName="noticeStartDate"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">noticeEndDate</ion-label>
+    <ion-input formControlName="noticeEndDate"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" type="submit" [disabled]="!noticeBoardForm.valid">Submit</ion-button>
+</form>
+
+</ion-content>

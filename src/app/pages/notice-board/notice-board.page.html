@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-img (click)="routePage('landingPage')" class="eDairyHeadderHomeIcon"
+          src="../../assets/images/SchooleDairyIcon.png"></ion-img></ion-col>
+        <ion-col size="8" class="custom-col ion-text-center" >noticeBoard</ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">noticeBoard</ion-title>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-card *ngFor="let noticeItem of schoolNoticeBoardList;">
+    <ion-card-header>
+      <ion-card-title>Notice Title : {{noticeItem.noticeTitle}}</ion-card-title>
+      <ion-card-subtitle>Notice Department : {{noticeItem.noticeDepartment}}</ion-card-subtitle>
+      <ion-card-subtitle>Notice By : {{noticeItem.noticeBy}}</ion-card-subtitle>
+       <ion-card-subtitle>Notice Start Date: {{noticeItem.noticeStartDate}}</ion-card-subtitle>
+       <ion-card-subtitle>Notice End Date: {{noticeItem.noticeEndDate}}</ion-card-subtitle>
+       <ion-card-subtitle>Notice Id {{noticeItem.id}}</ion-card-subtitle>
+      </ion-card-header>
+  
+    <ion-card-content>
+      {{noticeItem.noticeDetails}}
+    
+    </ion-card-content>
+
+    
+<ion-item>
+
+  <ion-icon slot="end" (click)="sendCommunicaitonMessage(noticeItem.noticeDetails)" expand="block" name="notifications"></ion-icon>
+  <ion-icon slot="end" (click)="editSchoolNoticeBoard(noticeItem)" expand="block" name="create"></ion-icon>
+  <ion-icon slot="end" (click)="duplicateSchoolNoticeBoard(noticeItem)" expand="block" name="copy"></ion-icon>
+  <ion-icon slot="end" (click)="deleteSchoolEvent(noticeItem.id)" expand="block" name="trash"></ion-icon>
+
+
+</ion-item>
+    
+  </ion-card>
+
+ 
+ 
+</ion-content>

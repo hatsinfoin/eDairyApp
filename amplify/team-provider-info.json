@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-edairyapp-dev-194815-authRole",
+      "UnauthRoleArn": "arn:aws:iam::767397912640:role/amplify-edairyapp-dev-194815-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::767397912640:role/amplify-edairyapp-dev-194815-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-edairyapp-dev-194815-deployment",
+      "UnauthRoleName": "amplify-edairyapp-dev-194815-unauthRole",
+      "StackName": "amplify-edairyapp-dev-194815",
+      "StackId": "arn:aws:cloudformation:ap-south-1:767397912640:stack/amplify-edairyapp-dev-194815/07f6a060-e3a0-11ee-9e04-0606155f89a7",
+      "AmplifyAppId": "d1xlwmysagj4hx"
+    },
+    "categories": {
+      "auth": {
+        "edairyapp70cbaad6": {}
+      },
+      "storage": {
+        "schooledairyimagbucket": {}
+      }
+    }
+  }
+}

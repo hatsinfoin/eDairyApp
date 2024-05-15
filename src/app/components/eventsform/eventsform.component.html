@@ -1,0 +1,97 @@
+
+<ion-content >
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+      </ion-buttons>
+      <ion-title class="ion-text-center ion-align-items-center" >Add / Edit Events </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+
+  
+<form [formGroup]="schoolEventsForm" (ngSubmit)="onSubmit()">
+  <!-- Add your form fields with appropriate form controls -->
+  <ion-item>
+    <ion-label position="floating">branch Id</ion-label>
+    <ion-input formControlName="branchId"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Event ID</ion-label>
+    <ion-input formControlName="eventId"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">event Name</ion-label>
+    <ion-input formControlName="eventName"></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">eventType</ion-label>
+    <ion-input formControlName="eventType"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">eventDescription </ion-label>
+    <ion-input formControlName="eventDescription"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">eventLevel </ion-label>
+    <ion-input formControlName="eventLevel"></ion-input>
+  </ion-item>
+
+  <!-- <ion-chip (click)="addImageInput()" color="success" >Add Image</ion-chip>
+
+ 
+  <ion-item *ngFor="let imageControl of productImageControls; let i = index">
+    <ion-label position="floating">Product Image {{ i + 1 }}</ion-label>
+    <ion-input [formControl]="imageControl"></ion-input>
+    <ion-icon name="close-circle" (click)="removeImageInput(i)"></ion-icon>
+  </ion-item> -->
+  
+  <ion-item>
+    <ion-label position="floating">eventInitiatedBy</ion-label>
+    <ion-input formControlName="eventInitiatedBy"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">eventOrganizedBy</ion-label>
+    <ion-input formControlName="eventOrganizedBy"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">eventStartDate</ion-label>
+    <ion-datetime formControlName="eventStartDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+
+   </ion-item> 
+  
+  <ion-item>
+    <ion-label position="floating">eventEndDate</ion-label>
+    <ion-datetime formControlName="eventEndDate" displayFormat="DD/MM/YYYY"></ion-datetime>
+   </ion-item> 
+  
+  <ion-item>
+    <ion-label position="floating">eventStatus</ion-label>
+    <ion-input formControlName="eventStatus"></ion-input>
+  </ion-item> 
+
+
+  <!-- Repeat similar structures for other form controls -->
+
+  <ion-button expand="full" type="submit" [disabled]="!schoolEventsForm.valid" >Submit</ion-button>
+</form>
+
+ 
+
+
+
+</ion-content>
+
+

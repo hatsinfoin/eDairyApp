@@ -1,0 +1,48 @@
+
+<ion-content >
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+      </ion-buttons>
+      <ion-title class="ion-text-center ion-align-items-center" >Holiday</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  
+<form [formGroup]="schoolHolidayForm" (ngSubmit)="onSubmit()">
+  <!-- Add your form fields with appropriate form controls -->
+  <ion-item>
+    <ion-label position="floating">branch Id</ion-label>
+    <ion-input formControlName="branchId"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">holidayTitle</ion-label>
+    <ion-input formControlName="holidayTitle"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">holidayStartDate</ion-label>
+    <ion-input formControlName="holidayStartDate"></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">holidayEndDate</ion-label>
+    <ion-input formControlName="holidayEndDate"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">holidayDiscription </ion-label>
+    <ion-input formControlName="holidayDiscription"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" type="submit" [disabled]="!schoolHolidayForm.valid" >Submit</ion-button>
+</form>
+
+
+  </ion-content>

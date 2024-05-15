@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-button color="medium" (click)="cancel()">Cancel</ion-button> -->
+    </ion-buttons>
+    <ion-title style="text-align: center;">Student Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+
+<form [formGroup]="schoolStudentForm" (ngSubmit)="onSubmit()">
+  <!-- Add your form fields with appropriate form controls -->
+  <ion-item>
+    <ion-label position="floating">stRollNo</ion-label>
+    <ion-input formControlName="stRollNo"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">stNaame</ion-label>
+    <ion-input formControlName="stNaame"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">stDateofBirth</ion-label>
+    <ion-datetime formControlName="stDateofBirth"  ></ion-datetime>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">stAddres1</ion-label>
+    <ion-input formControlName="stAddres1"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">stAddres2 </ion-label>
+    <ion-input formControlName="stAddres2"></ion-input>
+  </ion-item>
+
+   
+
+  <!-- <ion-chip (click)="addImageInput()" color="success" >Add Image</ion-chip>
+
+ 
+  <ion-item *ngFor="let imageControl of productImageControls; let i = index">
+    <ion-label position="floating">Product Image {{ i + 1 }}</ion-label>
+    <ion-input [formControl]="imageControl"></ion-input>
+    <ion-icon name="close-circle" (click)="removeImageInput(i)"></ion-icon>
+  </ion-item> -->
+  
+  <ion-item>
+    <ion-label position="floating">stPhoneNumber</ion-label>
+    <ion-input formControlName="stPhoneNumber"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">stMotherName</ion-label>
+    <ion-input formControlName="stMotherName"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">stFatherName</ion-label>
+    <ion-input formControlName="stFatherName" ></ion-input>
+
+   </ion-item> 
+  
+  <ion-item>
+    <ion-label position="floating">stGender</ion-label>
+    <ion-input formControlName="stGender"  ></ion-input>
+   </ion-item> 
+  
+  <ion-item>
+    <ion-label position="floating">stPincode</ion-label>
+    <ion-input formControlName="stPincode"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">stEmergencyContNumber</ion-label>
+    <ion-input formControlName="stEmergencyContNumber"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">standardId</ion-label>
+    <ion-input formControlName="standardId"></ion-input>
+  </ion-item> 
+
+  <ion-item>
+    <ion-label position="floating">profilePic</ion-label>
+    <input type="file" formControlName="profilePic" multiple (change)="handleFileInput($event)">
+    <ion-button (click)="uploadImages()">Upload Images</ion-button>
+  </ion-item> 
+ 
+  <!-- Repeat similar structures for other form controls -->
+
+  <ion-button expand="full" type="submit" [disabled]="!schoolStudentForm.valid" >Submit</ion-button>
+</form>
+
+</ion-content>

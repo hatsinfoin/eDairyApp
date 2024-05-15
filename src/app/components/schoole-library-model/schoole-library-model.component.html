@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- <ion-button color="medium" (click)="cancel()">Cancel</ion-button> -->
+    </ion-buttons>
+    <ion-title style="text-align: center;">School eLibrarydd {{branchId}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <ion-segment value="custom" color="primary">
+
+    <ion-segment-button (click)="changeSegment('custom')" value="custom">
+      <ion-label>Subjects</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button (click)="changeSegment(libDetails.subjectName)" value='libDetails.subjectName'
+      *ngFor="let libDetails of schoolLibraryList[0].subjectLibraryDetails;" >
+      <ion-label>{{libDetails.subjectName}}</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+
+  <ion-list *ngIf="selectedSegment === 'custom';">
+    <ion-card (click)="changeSegment(libDetails.subjectName)"  class="custom-card" *ngFor="let libDetails of schoolLibraryList[0].subjectLibraryDetails">
+      <ion-card-header>
+        <ion-card-title>
+          {{libDetails.subjectName}}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{libDetails.summaryDetails}}
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+<div *ngFor="let libDetails of schoolLibraryList[0].subjectLibraryDetails">
+  <ion-list *ngIf="selectedSegment === libDetails.subjectName; else 'custom'">
+
+    <ion-card>
+      <ion-card-subtitle>Books Refrence</ion-card-subtitle>
+
+    <ion-item *ngFor="let book of libDetails.libReferenceBook">
+      <ion-label>{{ book.refName }}</ion-label>
+      <ion-note slot="end">{{ book.refLink }}</ion-note>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-card-subtitle>video Refrence</ion-card-subtitle>
+    <ion-item *ngFor="let video of libDetails.libReferencevideos">
+      <ion-label>{{ video.refName }}</ion-label>
+      <ion-note slot="end">{{ video.refLink }}</ion-note>
+    </ion-item>
+  </ion-card>
+  </ion-list>
+  
+</div>
+  <!-- <ion-list *ngIf="selectedSegment === 'segment2'; else 'custom'">
+
+     <ion-item>
+      <ion-label>segment2 Department Name:</ion-label>
+      <ion-input  placeholder="Enter department name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>segment2 Department ID:</ion-label>
+      <ion-input  placeholder="Enter department ID"></ion-input>
+    </ion-item> 
+  </ion-list>-->
+
+  <!-- 
+ <ion-list>
+  <ion-item>
+    <ion-label>ID:</ion-label>
+    <ion-note slot="end">{{ schoolLibrary._id }}</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Standard ID:</ion-label>
+    <ion-note slot="end">{{ schoolLibrary.standardId }}</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Branch ID:</ion-label>
+    <ion-note slot="end">{{ schoolLibrary.branchId }}</ion-note>
+  </ion-item>
+</ion-list>
+
+<ion-list *ngFor="let subject of schoolLibrary.subjectLibraryDetails">
+  <ion-item-divider>
+    <ion-label>{{ subject.subjectName }}</ion-label>
+  </ion-item-divider>
+
+  <ion-item>
+    <ion-label>Subject ID:</ion-label>
+    <ion-note slot="end">{{ subject.subjectsId }}</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Summary:</ion-label>
+    <ion-note slot="end">{{ subject.summaryDetails }}</ion-note>
+  </ion-item>
+
+  <ion-item *ngFor="let book of subject.libReferenceBook">
+    <ion-label>{{ book.refName }}</ion-label>
+    <ion-note slot="end">{{ book.refLink }}</ion-note>
+  </ion-item>
+
+  <ion-item *ngFor="let video of subject.LibReferencevideos">
+    <ion-label>{{ video.refName }}</ion-label>
+    <ion-note slot="end">{{ video.refLink }}</ion-note>
+  </ion-item>
+</ion-list> -->
+<div #noItemsBlock>
+  <ion-card>
+    <ion-card-content>
+      <p>No items to display.</p>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+ 
+
+</ion-content>
