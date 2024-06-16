@@ -17,10 +17,10 @@ export class TimetableService {
 
 
   ipAddress = this.appProp.getHostName;
-  getAllSchoolTimetableApiURL = "http://" + this.ipAddress + "/v1/timetable/getAllTimetable";
-  saveSchoolTimetableURL = "http://" + this.ipAddress + "/v1/timetable/saveTimetable";
-  deleteSchoolTimetableApiURL = "http://" + this.ipAddress + "/v1/timetable/deleteTimetable";
-  editSchoolTimetableApiURL = "http://" + this.ipAddress + "/v1/timetable/saveTimetable";
+  getAllSchoolTimetableApiURL =  this.ipAddress + "/v1/timetable/getAllTimetable";
+  saveSchoolTimetableURL =  this.ipAddress + "/v1/timetable/saveTimetable";
+  deleteSchoolTimetableApiURL =  this.ipAddress + "/v1/timetable/deleteTimetable";
+  editSchoolTimetableApiURL =  this.ipAddress + "/v1/timetable/saveTimetable";
 
   constructor(private apiService: ApiService, private http: HttpClient,private appProp: AppPropertiesService) { 
     this.ipAddress = appProp.getHostName;

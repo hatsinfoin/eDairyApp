@@ -16,10 +16,10 @@ export class EventsService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllEventsApiURL = "http://"+this.ipAddress+"/v1/events/getAllEvents";
-  saveEventApiURL =  "http://"+this.ipAddress+"/v1/events/saveEvent";
-  deleteEventApiURL =  "http://"+this.ipAddress+"/v1/events/deleteEvent";
-  editEventApiURL =  "http://"+this.ipAddress+"/v1/events/editEvent";
+  getAllEventsApiURL = this.ipAddress+"/v1/events/getAllEvents";
+  saveEventApiURL =  this.ipAddress+"/v1/events/saveEvent";
+  deleteEventApiURL =  this.ipAddress+"/v1/events/deleteEvent";
+  editEventApiURL =  this.ipAddress+"/v1/events/editEvent";
   
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
 

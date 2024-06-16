@@ -18,7 +18,7 @@ export class CommunicaitonMessageService {
   };
 
   ipAddress = this.appProp.getHostName;
-  communicationServiceURL = "http://" + this.ipAddress + "/v1/commonUtil/sendWhatAppMessage";
+  communicationServiceURL =  this.ipAddress + "/v1/commonUtil/sendWhatAppMessage";
   
 
   constructor(private communicaitonMessage:CommunicaitonMessage,private apiService: ApiService, private http: HttpClient,private appProp: AppPropertiesService) { 

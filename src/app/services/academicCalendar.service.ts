@@ -17,10 +17,10 @@ export class AcademicCalendarService {
 
   ipAddress = this.appProp.getHostName;
 
-  getAllAcademicCalendarApiURL = "http://"+this.ipAddress+"/v1/AcademicCalendar/getAllAcademicCalendars";
-  saveEventApiURL =  "http://"+this.ipAddress+"/v1/AcademicCalendar/saveAcademicCalendar";
-  deleteEventApiURL =  "http://"+this.ipAddress+"/v1/AcademicCalendar/deleteAcademicCalendar";
-  editEventApiURL =  "http://"+this.ipAddress+"/v1/AcademicCalendar/saveAcademicCalendar";
+  getAllAcademicCalendarApiURL = this.ipAddress+"/v1/AcademicCalendar/getAllAcademicCalendars";
+  saveEventApiURL =  this.ipAddress+"/v1/AcademicCalendar/saveAcademicCalendar";
+  deleteEventApiURL =  this.ipAddress+"/v1/AcademicCalendar/deleteAcademicCalendar";
+  editEventApiURL =  this.ipAddress+"/v1/AcademicCalendar/saveAcademicCalendar";
   
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
 

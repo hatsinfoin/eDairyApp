@@ -17,15 +17,16 @@ export class NoticeBoardService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllApiURL = "http://"+this.ipAddress+"/v1/noticeboard/getAllNotices";
-  saveApiURL =  "http://"+this.ipAddress+"/v1/noticeboard/saveNoticeBoard";
-  deleteApiURL =  "http://"+this.ipAddress+"/v1/noticeboard/deleteNoticeBoardsByID";
-  editApiURL =  "http://"+this.ipAddress+"/v1/noticeboard/editEvent";
-  communicationServiceURL =  "http://"+this.ipAddress+"/v1/commonUtil/sendWhatAppMessage";
-  sendWhatAppMessagegetAPI =  "http://"+this.ipAddress+"/v1/commonUtil/sendWhatAppMessageget";
+  getAllApiURL = this.ipAddress+"/v1/noticeboard/getAllNotices";
+  saveApiURL =  this.ipAddress+"/v1/noticeboard/saveNoticeBoard";
+  deleteApiURL =  this.ipAddress+"/v1/noticeboard/deleteNoticeBoardsByID";
+  editApiURL =  this.ipAddress+"/v1/noticeboard/editEvent";
+  communicationServiceURL =  this.ipAddress+"/v1/commonUtil/sendWhatAppMessage";
+  sendWhatAppMessagegetAPI =  this.ipAddress+"/v1/commonUtil/sendWhatAppMessageget";
   
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
     this.ipAddress = appProp.getHostName;
+    console.log(this.ipAddress);
 
   }
 

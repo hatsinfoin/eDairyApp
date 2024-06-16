@@ -16,12 +16,12 @@ export class StudentProfileService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllStudentProfileApiURL = "http://"+this.ipAddress+"/v1/students/findAllStudents";
-  getStudentProfileByIdApiURL = "http://"+this.ipAddress+"/v1/students/searchByStudentId";
-  saveEventApiURL =  "http://"+this.ipAddress+"/v1/students/saveStudent";
-  deleteEventApiURL =  "http://"+this.ipAddress+"/v1/students/deleteStudent";
-  editEventApiURL =  "http://"+this.ipAddress+"/v1/students/editStudent";
-  uploadStudentProfileAPI ="http://"+this.ipAddress+"/v1/students/images/uploadFiles";
+  getAllStudentProfileApiURL = this.ipAddress+"/v1/students/findAllStudents";
+  getStudentProfileByIdApiURL = this.ipAddress+"/v1/students/searchByStudentId";
+  saveEventApiURL =  this.ipAddress+"/v1/students/saveStudent";
+  deleteEventApiURL =  this.ipAddress+"/v1/students/deleteStudent";
+  editEventApiURL =  this.ipAddress+"/v1/students/editStudent";
+  uploadStudentProfileAPI =this.ipAddress+"/v1/students/images/uploadFiles";
 
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
 

@@ -16,10 +16,10 @@ export class HolidaysService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllSchoolHolidaysApiURL = "http://"+this.ipAddress+"/v1/holidayLists/getAllHollidays";
-  saveSchoolHolidaysURL =  "http://"+this.ipAddress+"/v1/holidayLists/saveHolidaysList";
-  deleteSchoolHolidaysApiURL =  "http://"+this.ipAddress+"/v1/holidayLists/deleteHoliday";
-  editSchoolHolidaysApiURL =  "http://"+this.ipAddress+"/v1/holidayLists/editHoliday";
+  getAllSchoolHolidaysApiURL = this.ipAddress+"/v1/holidayLists/getAllHollidays";
+  saveSchoolHolidaysURL =  this.ipAddress+"/v1/holidayLists/saveHolidaysList";
+  deleteSchoolHolidaysApiURL =  this.ipAddress+"/v1/holidayLists/deleteHoliday";
+  editSchoolHolidaysApiURL =  this.ipAddress+"/v1/holidayLists/editHoliday";
   
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) {
 

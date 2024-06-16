@@ -16,11 +16,11 @@ export class SchoolLibraryService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllApiURL = "http://"+this.ipAddress+"/v1/SchooleLibrary/getAllSchooleLibrarys";
-  saveApiURL =  "http://"+this.ipAddress+"/v1/SchooleLibrary/saveSchooleLibrary";
-  deleteApiURL =  "http://"+this.ipAddress+"/v1/SchooleLibrary/deleteSchooleLibrary";
-  libByBranchStdApiURL =  "http://"+this.ipAddress+"/v1/SchooleLibrary/getLibDetlsByBranchStd";
-  editApiURL =  "http://"+this.ipAddress+"/v1/SchooleLibrary/editsaveSchooleLibrary";
+  getAllApiURL = this.ipAddress+"/v1/SchooleLibrary/getAllSchooleLibrarys";
+  saveApiURL =  this.ipAddress+"/v1/SchooleLibrary/saveSchooleLibrary";
+  deleteApiURL =  this.ipAddress+"/v1/SchooleLibrary/deleteSchooleLibrary";
+  libByBranchStdApiURL =  this.ipAddress+"/v1/SchooleLibrary/getLibDetlsByBranchStd";
+  editApiURL =  this.ipAddress+"/v1/SchooleLibrary/editsaveSchooleLibrary";
   
   constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
     this.ipAddress = appProp.getHostName;

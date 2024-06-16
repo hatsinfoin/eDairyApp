@@ -6,6 +6,7 @@ import { CommunicaitonMessage } from '../../dataDTO/communicaitonMessage.data';
 import { ModalController } from '@ionic/angular';
 import { NotificationFormComponent } from '../../components/notification-form/notification-form.component';
 import { CommunicaitonMessageService } from '../../services/communicaitonMessage.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-notice-board',
@@ -31,13 +32,27 @@ export class NoticeBoardPage implements OnInit {
   }
 
   reFetchAllNoticeBoard() {
+   
     this.noticeBoardService.getSchoolNoticeBoard().subscribe((data) => {
       console.log(data);
 
       this.schoolNoticeBoardList = data;
       //  this.iterateSchoolEvents(data);
 
-    });
+    },
+    (error: HttpErrorResponse) => {
+      // Handle error response
+      if (error.error instanceof ErrorEvent) {
+        // Client-side error
+        alert('An error occurred:'+ error.error.message);
+      } else {
+        // Backend error
+        alert(
+          `Backend returned code ${error.status}, ` +
+          `body was: ${error.error}`
+        );
+      }
+  });
   }
 
 

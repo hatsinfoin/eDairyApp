@@ -17,10 +17,10 @@ export class StandardService {
 
   ipAddress = this.appProp.getHostName;
   
-  getAllSchoolStdApiURL = "http://" + this.ipAddress + "/v1/exams/getAllExams";
-  saveSchoolStdApiURL = "http://" + this.ipAddress + "/v1/exams/saveExam";
-  deleteSchoolStdApiURL = "http://" + this.ipAddress + "/v1/exams/deleteStandard";
-  editSchoolStdApiURL = "http://" + this.ipAddress + "/v1/exams/saveExam";
+  getAllSchoolStdApiURL =  this.ipAddress + "/v1/exams/getAllExams";
+  saveSchoolStdApiURL =  this.ipAddress + "/v1/exams/saveExam";
+  deleteSchoolStdApiURL =  this.ipAddress + "/v1/exams/deleteStandard";
+  editSchoolStdApiURL =  this.ipAddress + "/v1/exams/saveExam";
 
   constructor(private apiService: ApiService, private http: HttpClient,private appProp: AppPropertiesService) { 
 
