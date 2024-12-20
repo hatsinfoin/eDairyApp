@@ -3,67 +3,161 @@
     <ion-buttons slot="start">
       <!-- <ion-button color="medium" (click)="cancel()">Cancel</ion-button> -->
     </ion-buttons>
-    <ion-title style="text-align: center;"> Login </ion-title>
+    <ion-title style="text-align: center;">School eDairy</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" >Close</ion-button>
+      <!--ion-button (click)="confirm()">Close</ion-button-->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!--
-  Authors : bunchdevelopers (Rahul Jograna)
-  Website : https://bunchdevelopers.com/
-  App Name : ionic6Template Pack
-  This App Template Source code is licensed as per the
-  terms found in the Website https://bunchdevelopers.com/license
-  Copyright and Good Faith Purchasers © 2021-present bunchdevelopers.
- -->
- <ion-content class="ion-padding">
-
-  <div class="title">
-    <ion-label class="heading">Login To Your Account!</ion-label>
-    <ion-label class="sub_heading">Sign in to your account.</ion-label>
-  </div>
-
-  <div class="main_div">
-    <ion-item lines="none">
-      <ion-input type="text" placeholder="Your Email Address"></ion-input>
-    </ion-item>
-    <ion-item lines="none">
-      <ion-input type="text" placeholder="Password"></ion-input>
-      <ion-icon slot="end" name="eye" color="medium"></ion-icon>
-    </ion-item>
-
-    <div class="btn">
-      <ion-buttons slot="end">
-        <ion-button (click)="onForgot()" color="medium">
-          Forgot Password?
-        </ion-button>
-      </ion-buttons>
-    </div>
-
-    <ion-button class="content_button" (click)="login()" expand="block">
+<ion-content class="ion-padding">
+  <!-- Segment Selector -->
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="login">
       Login
-    </ion-button>
+    </ion-segment-button>
+    <ion-segment-button value="register">
+      Register
+    </ion-segment-button>
+    <ion-segment-button value="forgot-password">
+      Forgot Password
+    </ion-segment-button>
+  </ion-segment>
 
-    <div class="orDiv">
-      <div class="line"></div>
-      <ion-label class="sub_heading">Or Sign in With</ion-label>
-      <div class="line"></div>
+  <!-- Login Segment -->
+  <div *ngIf="segment === 'login'">
+    <div class="title">
+      <ion-label class="heading">Login To Your Account!</ion-label>
+      <ion-label *ngIf="errorMessage" color="danger" class="error-message">
+        {{ errorMessage }}
+      </ion-label>
     </div>
 
-    <ion-button class="fb_button" (click)="onfacebook()" expand="block">
-      <ion-icon slot="start" name="logo-facebook"></ion-icon>
-      Continue With Facebook
-    </ion-button>
-    <ion-button class="google_button" (click)="onGoogle()" expand="block" fill="outline" color="dark">
-      <ion-icon slot="start" name="logo-google"></ion-icon>
-      Continue With Google
-    </ion-button>
+    <div class="main_div">
+      <!-- ion-form to handle form controls and validation -->
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+        <!-- Username input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="username" placeholder="Enter User ID" required></ion-input>
+        </ion-item>
 
-    <div class="title">
-      <ion-label class="sub_heading">Not A Member? <span (click)="singup()">Join Now</span></ion-label>
+        <!-- Password input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="password" type="password" placeholder="Password" required></ion-input>
+          <ion-icon slot="end" name="eye" color="medium"></ion-icon>
+        </ion-item>
+
+        <!-- Forgot password link -->
+        <div class="btn">
+          <ion-buttons slot="end">
+            <ion-button (click)="goToForgotPassword()" color="medium">Forgot Password?</ion-button>
+          </ion-buttons>
+        </div>
+
+        <!-- Submit button for login -->
+        <ion-button class="content_button" expand="block" [disabled]="!loginForm.valid" type="submit">
+          Login
+        </ion-button>
+
+        <!-- Signup link -->
+        <div class="title">
+          <ion-label class="sub_heading">
+            Not A Member? <span (click)="goToRegister('register')">Join Now</span>
+          </ion-label>
+        </div>
+      </form>
     </div>
   </div>
 
+  <!-- Register Segment -->
+  <div *ngIf="segment === 'register'">
+    <div class="title">
+      <ion-label class="heading">Register New Account</ion-label>
+    </div>
+    <!-- Display Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <ion-label color="success">{{ successMessage }}</ion-label>
+    </div>
+
+    <!-- Display Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <ion-label color="danger">{{ errorMessage }}</ion-label>
+    </div>
+    <div class="main_div">
+      <!-- ion-form to handle form controls and validation -->
+      <form [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+        <!-- ID input field 
+        <ion-item lines="none">
+          <ion-input formControlName="id" placeholder="Enter ID" required></ion-input>
+        </ion-item>-->
+
+        <!-- UserId input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="userId" placeholder="Enter User ID" required></ion-input>
+        </ion-item>
+
+        <!-- First Name input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="firstName" placeholder="Enter First Name" required></ion-input>
+        </ion-item>
+
+        <!-- Last Name input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="lastName" placeholder="Enter Last Name" required></ion-input>
+        </ion-item>
+
+        <!-- Email input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="email" type="email" placeholder="Enter Email" required></ion-input>
+        </ion-item>
+
+        <!-- Password input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="password" type="password" placeholder="Password" required></ion-input>
+        </ion-item>
+
+        <!-- Confirm Password input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="confirmPassword" type="password" placeholder="Confirm Password"
+            required></ion-input>
+        </ion-item>
+
+        <!-- User Role input field -->
+        <ion-item lines="none">
+          <ion-select formControlName="userRole" placeholder="Select Role" required>
+            <ion-select-option value="admin">Admin</ion-select-option>
+            <ion-select-option value="user">User</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Submit button for Register -->
+        <ion-button class="content_button" expand="block" [disabled]="!registerForm.valid" type="submit">
+          Register
+        </ion-button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Forgot Password Segment -->
+  <div *ngIf="segment === 'forgot-password'">
+    <div class="title">
+      <ion-label class="heading">Forgot Password</ion-label>
+      <ion-label class="sub_heading">Enter your email to reset your password.</ion-label>
+    </div>
+
+    <div class="main_div">
+      <!-- Form to handle forgot password -->
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="resetPassword(forgotPasswordForm)">
+        <!-- Email input field -->
+        <ion-item lines="none">
+          <ion-input formControlName="email" placeholder="Enter your email" required></ion-input>
+        </ion-item>
+
+        <!-- Submit button for password reset -->
+        <ion-button class="content_button" expand="block" [disabled]="!forgotPasswordForm.valid" type="submit">
+          Reset Password
+        </ion-button>
+      </form>
+    </div>
+  </div>
 </ion-content>

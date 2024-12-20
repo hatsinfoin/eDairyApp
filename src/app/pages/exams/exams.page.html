@@ -2,9 +2,11 @@
   <ion-toolbar>
     <ion-grid>
       <ion-row>
-        <ion-col><ion-img (click)="routePage('landingPage')" class="eDairyHeadderHomeIcon"
-          src="../../assets/images/SchooleDairyIcon.png"></ion-img></ion-col>
-        <ion-col size="8" class="custom-col ion-text-center" >Exams</ion-col>
+        <ion-col>
+          <ion-img (click)="routePage('landingPage')" class="eDairyHeadderHomeIcon"
+            src="../../assets/images/SchooleDairyIcon.png"></ion-img>
+        </ion-col>
+        <ion-col size="8" class="custom-col ion-text-center">Exams</ion-col>
         <ion-col></ion-col>
       </ion-row>
     </ion-grid>
@@ -12,25 +14,50 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">exams</ion-title>
+      <ion-title>Exams List</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-content>
 
+    <ion-item>
+      <ion-select label="Select Standard" placeholder="Select Standard" (ionChange)="onStandardChange($event)">
+        <ion-select-option *ngFor="let standard of standardList" [value]="standard">{{standard}}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-grid>
-    <ion-row *ngFor="let standard of schoolStandardList" class="ion-align-items-center">
-      <ion-col  >
-        <ion-card>
-          <ion-card-content>
-            <ion-card-title>{{ standard.standardName }}</ion-card-title>
-            <!-- Add more labels as needed for other properties -->
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-item>
+      <ion-select label="Select Exam" placeholder="Select Exam" (ionChange)="onExamChange($event)">
+        <ion-select-option *ngFor="let exam of examsList" [value]="exam">{{exam}}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  
-</ion-content>
+    <!-- Filter for subject name -->
+    <ion-item>
+      <ion-label position="floating">Search by Subject</ion-label>
+      <ion-input [(ngModel)]="subjectFilter" (ionInput)="filterSubjects()" debounce="500"
+        placeholder="Enter subject name"></ion-input>
+    </ion-item>
+
+    <!-- Table for displaying subjects and student results -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3"><strong>Subject</strong></ion-col>
+        <ion-col size="3"><strong>Standard</strong></ion-col>
+        <ion-col size="3"><strong>Student Roll No</strong></ion-col>
+        <ion-col size="3"><strong>Marks Obtained</strong></ion-col>
+      </ion-row>
+
+      <!-- Loop through each exam and subject -->
+      <div *ngFor="let exam of exams">
+        <ion-row *ngFor="let subject of filteredSubjects(exam)">
+          <ion-col size="3">{{ subject.subjectsId }}</ion-col>
+          <ion-col size="3">{{ subject.standardId }}</ion-col>
+          <ion-col size="3">{{ subject.examStudentResults.stRollNo }}</ion-col>
+          <ion-col size="3">{{ subject.examStudentResults.marksObtained }}</ion-col>
+        </ion-row>
+      </div>
+    </ion-grid>
+
+  </ion-content>

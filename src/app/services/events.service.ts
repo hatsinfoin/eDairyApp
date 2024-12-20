@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { SchoolEvents } from 'src/app/dataDTO/schoolEvents.data'; 
+import { catchError, finalize, tap } from 'rxjs/operators';
+import { SchoolEvents } from 'src/app/dataDTO/schoolEvents.data';
 import { ApiService } from '../services/api.service';
 import { AppPropertiesService } from '../services/app-properties.service';
+import { LoadingComponent } from '../loading/loading.component';  // Import the LoadingComponent
 
 @Injectable({
   providedIn: 'root'
@@ -16,64 +17,82 @@ export class EventsService {
   };
 
   ipAddress = this.appProp.getHostName;
-  getAllEventsApiURL = this.ipAddress+"/v1/events/getAllEvents";
-  saveEventApiURL =  this.ipAddress+"/v1/events/saveEvent";
-  deleteEventApiURL =  this.ipAddress+"/v1/events/deleteEvent";
-  editEventApiURL =  this.ipAddress+"/v1/events/editEvent";
-  
-  constructor(private apiService: ApiService,private http: HttpClient,private appProp: AppPropertiesService) { 
+  getAllEventsApiURL = this.ipAddress + "/v1/events/getAllEvents";
+  saveEventApiURL = this.ipAddress + "/v1/events/saveEvent";
+  deleteEventApiURL = this.ipAddress + "/v1/events/deleteEvent";
+  editEventApiURL = this.ipAddress + "/v1/events/editEvent";
+
+  constructor(private apiService: ApiService,
+    private http: HttpClient,
+    private appProp: AppPropertiesService,
+    private loadingComponent: LoadingComponent) { // Inject LoadingComponent
 
     this.ipAddress = appProp.getHostName;
-
   }
 
-
+  // Get all school events
   getSchoolEvents(): Observable<SchoolEvents[]> {
-     return this.http.get<SchoolEvents[]>(this.getAllEventsApiURL)
+    this.loadingComponent.presentLoading('Fetching events...');  // Show loading
+
+    return this.http.get<SchoolEvents[]>(this.getAllEventsApiURL, this.httpHeader)
       .pipe(
-        tap(_ => console.log(`fetched All School Events Successfuly: `)),
-        catchError(this.handleError<SchoolEvents[]>(`Error while getting getSchoolEvents`))
+        tap(_ => console.log(`Fetched all school events successfully`)),
+        catchError(this.handleError<SchoolEvents[]>(`Error while fetching school events`)),
+        finalize(() => {
+          this.loadingComponent.dismissLoading();  // Dismiss loading after the request completes
+        })
       );
   }
 
-
-  saveSchoolEvents(saveSchoolEvent:SchoolEvents): Observable<SchoolEvents[]> {
-    console.log("calling saveSchoolEvent ");
-    console.log(this.saveEventApiURL);
+  // Save a new school event
+  saveSchoolEvents(saveSchoolEvent: SchoolEvents): Observable<SchoolEvents[]> {
+    console.log("Calling saveSchoolEvent");
     console.log(saveSchoolEvent);
-    return this.http.post<SchoolEvents[]>(this.saveEventApiURL,saveSchoolEvent)
-     .pipe(
-       tap(_ => console.log(`saveSchoolEvent Saved Successlfy: `)),
-       catchError(this.handleError<SchoolEvents[]>(`Error while saving saveSchoolEvents`))
-     );
- }
+    this.loadingComponent.presentLoading('Saving event...');  // Show loading
 
- editSchoolEvents(saveSchoolEvent:SchoolEvents): Observable<SchoolEvents[]> {
-  console.log("calling saveSchoolEvent ");
-  console.log(this.saveEventApiURL);
-  console.log(saveSchoolEvent);
-  return this.http.put<SchoolEvents[]>(this.saveEventApiURL,saveSchoolEvent)
-   .pipe(
-     tap(_ => console.log(`saveSchoolEvent Saved Successlfy: `)),
-     catchError(this.handleError<SchoolEvents[]>(`Error while saving saveSchoolEvents`))
-   );
-}
+    return this.http.post<SchoolEvents[]>(this.saveEventApiURL, saveSchoolEvent, this.httpHeader)
+      .pipe(
+        tap(_ => console.log('School event saved successfully')),
+        catchError(this.handleError<SchoolEvents[]>(`Error while saving event`)),
+        finalize(() => {
+          this.loadingComponent.dismissLoading();  // Dismiss loading after the request completes
+        })
+      );
+  }
 
+  // Edit an existing school event
+  editSchoolEvents(saveSchoolEvent: SchoolEvents): Observable<SchoolEvents[]> {
+    console.log("Calling editSchoolEvent");
+    console.log(saveSchoolEvent);
+    this.loadingComponent.presentLoading('Updating event...');  // Show loading
 
+    return this.http.put<SchoolEvents[]>(this.editEventApiURL, saveSchoolEvent, this.httpHeader)
+      .pipe(
+        tap(_ => console.log('School event updated successfully')),
+        catchError(this.handleError<SchoolEvents[]>(`Error while updating event`)),
+        finalize(() => {
+          this.loadingComponent.dismissLoading();  // Dismiss loading after the request completes
+        })
+      );
+  }
 
- deleteSchoolEvents(deleteEventID:string): Observable<SchoolEvents[]> {
-  console.log("calling deleteSchoolEvents ");
-  console.log(this.deleteEventApiURL+"/"+deleteEventID);
-  console.log(deleteEventID);
-  return this.http.delete<SchoolEvents[]>(this.deleteEventApiURL+"/"+deleteEventID)
-   .pipe(
-     tap(_ => console.log(`deleteSchoolEvents  Successlfy: `)),
-     catchError(this.handleError<SchoolEvents[]>(`Error while saving saveSchoolEvents`))
-   );
-}
+  // Delete a school event
+  deleteSchoolEvents(deleteEventID: string): Observable<SchoolEvents[]> {
+    console.log("Calling deleteSchoolEvent");
+    console.log(deleteEventID);
+    this.loadingComponent.presentLoading('Deleting event...');  // Show loading
 
-  //saveEvent
+    return this.http.delete<SchoolEvents[]>(`${this.deleteEventApiURL}/${deleteEventID}`, this.httpHeader)
+      .pipe(
+        tap(_ => console.log('School event deleted successfully')),
+        catchError(this.handleError<SchoolEvents[]>(`Error while deleting event`)),
+        finalize(() => {
+          this.loadingComponent.dismissLoading();  // Dismiss loading after the request completes
+        })
+      );
+  }
 
+  // Error handling method
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -81,7 +100,4 @@ export class EventsService {
       return of(result as T);
     };
   }
-
-
-
 }

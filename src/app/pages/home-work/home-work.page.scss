@@ -1,5 +1,24 @@
 .eDairyHeadderHomeIcon {
-    width: 50px; /* Set your desired width */
-    height: 50px; /* Set your desired height */
-  }
-  
+  width: 50px;
+  /* Set your desired width */
+  height: 50px;
+  /* Set your desired height */
+}
+
+
+ion-segment {
+  margin-bottom: 20px;
+}
+
+ion-item {
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+p {
+  margin: 5px 0;
+}

@@ -58,6 +58,10 @@ const routes: Routes = [
   {
     path: 'school-activities',
     loadChildren: () => import('./pages/school-activities/school-activities.module').then( m => m.SchoolActivitiesPageModule)
+  },
+  {
+    path: 'school-student-leave',
+    loadChildren: () => import('./pages/school-student-leave/school-student-leave.module').then( m => m.SchoolStudentLeavePageModule)
   }
 
 ];

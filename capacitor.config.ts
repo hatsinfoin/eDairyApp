@@ -6,10 +6,10 @@ const config: CapacitorConfig = {
   webDir: 'www',
   server: {
     androidScheme: 'http',
-   /* cleartext: true,
-    allowNavigation: [
-      "http://test.test.id/api/*"
-    ]*/
+    cleartext: true
+  },
+  android: {
+    allowMixedContent: true
   }
 };
 

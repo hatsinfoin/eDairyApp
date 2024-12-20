@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-img (click)="routePage('landingPage')" class="eDairyHeadderHomeIcon"
+            src="../../assets/images/SchooleDairyIcon.png"></ion-img></ion-col>
+        <ion-col size="8" class="custom-col ion-text-center">Student Leave</ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Segment for leave form and leave history -->
+  <ion-segment [(ngModel)]="segment" value="leaveForm">
+    <ion-segment-button value="leaveForm">
+      Leave Form
+    </ion-segment-button>
+    <ion-segment-button value="leaveHistory">
+      Leave History
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Leave Form Section -->
+  <ion-card *ngIf="segment === 'leaveForm'">
+    <ion-card-header>
+      <ion-card-title>Leave Application</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="submitLeaveForm()">
+        <ion-item>
+          <ion-label position="stacked">Leave Reason</ion-label>
+          <ion-input [(ngModel)]="leaveForm.leaveReason" aria-label="leaveReason" name="leaveReason"
+            required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <!-- Updated ion-select with label property instead of ion-label -->
+          <ion-select [(ngModel)]="leaveForm.leaveType" name="leaveType" label="Leave Type" required>
+            <ion-select-option value="Casual">Casual</ion-select-option>
+            <ion-select-option value="Sick">Sick</ion-select-option>
+            <ion-select-option value="Other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Leave Start Date</ion-label>
+          <ion-datetime [(ngModel)]="leaveForm.leaveStartDate" aria-label="leaveStartDate" name="leaveStartDate"
+            required></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Leave End Date</ion-label>
+          <ion-datetime [(ngModel)]="leaveForm.leaveEndDate" aria-label="leaveEndDate" name="leaveEndDate"
+            required></ion-datetime>
+        </ion-item>
+
+        <ion-button expand="full" type="submit"
+          [disabled]="!leaveForm.leaveReason || !leaveForm.leaveType || !leaveForm.leaveStartDate || !leaveForm.leaveEndDate">
+          Submit Leave
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Leave History Section -->
+  <ion-card *ngIf="segment === 'leaveHistory'">
+    <ion-card-header>
+      <ion-card-title>Leave History</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let leave of stdleaveHistory">
+          <ion-label>
+            <h2>{{ leave.leaveType }} ({{ leave.leaveStartDate | date: 'shortDate' }} - {{ leave.leaveEndDate | date:
+              'shortDate' }})</h2>
+            <p>{{ leave.leaveReason }}</p>
+            <p>Applied by: {{ leave.leaveBy }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
