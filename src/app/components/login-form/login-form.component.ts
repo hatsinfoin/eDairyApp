@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import necessary modules
 import { UserLoginService } from '../../services/user-login-service.service'; // Import your service
+import { StudentProfileService } from '../../services/student.service'; // Import your service
 import { UserRegistrationService } from '../../services/user-registration.service'; // Import your service
 import { UserLogin } from 'src/app/dataDTO/UserLogin.data'; // Import UserLogin DTO
 import { StorageService } from '../../services/storage-service.service'; // Import your StorageService
 import { UserRegistration } from 'src/app/dataDTO/UserRegistration.data';
 import { AlertController } from '@ionic/angular';
+import { SchoolStudentProfile } from '../../dataDTO/schoolStudentPriofile.data';
 
 @Component({
   selector: 'app-login-form',
@@ -33,7 +35,8 @@ export class LoginFormComponent implements OnInit {
     private fb: FormBuilder,
     private storageService: StorageService,
     private userRegistrationService: UserRegistrationService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private stdProfileService: StudentProfileService,
   ) { }
 
   ngOnInit() {
@@ -76,14 +79,12 @@ export class LoginFormComponent implements OnInit {
 
   // Cancel modal and close
   cancel() {
-    alert("cancel");
-    return this.modalCtrl.dismiss(null, 'cancel');
+     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
   // Confirm modal action
   confirm() {
-    alert("confirm");
-    return this.modalCtrl.dismiss('confirm');
+     return this.modalCtrl.dismiss('confirm');
   }
 
   // Navigate to signup page
@@ -98,35 +99,85 @@ export class LoginFormComponent implements OnInit {
 
   // Login form submission logic
   login(loginForm: FormGroup) {
-    if (loginForm.valid) {
-      const userLogin = new UserLogin();
-      userLogin.setUsername(loginForm.get('username')?.value);
-      userLogin.setPassword(loginForm.get('password')?.value);
-      userLogin.setUserRole('user'); // Example user role, modify if needed
-
-      console.log(userLogin);
-
-      // Call validateUserLogin method of the service
-      this.userLoginService.validateUserLogin(userLogin).subscribe(
-        (response: any) => {
-          if (response) {
-            this.storageService.saveUserDetails(response).then(() => {
-              console.log('User details saved');
-              this.cancel();
-            });
-          } else {
-            console.error('Invalid login credentials');
-            this.errorMessage = 'Invalid credentials, please try again.';
-          }
-        },
-        (error) => {
-          console.error('Login error', error);
-        }
-      );
-    } else {
+    if (loginForm.invalid) {
       console.log('Form is invalid');
+      return;
+    }
+
+    const userLogin = this.createUserLoginFromForm(loginForm);
+    console.log(userLogin);
+
+    this.validateUserLogin(userLogin)
+      .then(response => {
+        if (response) {
+          this.handleUserDetailsSave(response);
+          console.log("userId " + response.userId);
+          this.fetchAndSaveStudentProfile(response.userId);
+        } else {
+          this.handleInvalidCredentials();
+        }
+      })
+      .catch(error => {
+        console.error('Login error', error);
+      });
+  }
+
+  private createUserLoginFromForm(loginForm: FormGroup): UserLogin {
+    const userLogin = new UserLogin();
+    userLogin.setUsername(loginForm.get('username')?.value);
+    userLogin.setPassword(loginForm.get('password')?.value);
+    userLogin.setUserRole('user'); // Example user role, modify if needed
+    return userLogin;
+  }
+
+  private validateUserLogin(userLogin: UserLogin): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.userLoginService.validateUserLogin(userLogin).subscribe(
+        response => resolve(response),
+        error => reject(error)
+      );
+    });
+  }
+
+  private async handleUserDetailsSave(response: any) {
+    try {
+      await this.storageService.saveUserDetails(response);
+      console.log('User details saved');
+      this.cancel(); // Optionally cancel after saving
+    } catch (error) {
+      console.error('Error saving user details:', error);
     }
   }
+
+  private fetchAndSaveStudentProfile(roleId: string) {
+    this.stdProfileService.getSchoolStudentProfileByRole(roleId).subscribe(
+      async (studentProfile: SchoolStudentProfile) => {
+        try {
+          if (studentProfile) {
+            console.log("studentProfile");
+            console.log(studentProfile);
+            await this.storageService.saveStudentDetails(studentProfile);
+            console.log('Student details saved');
+          } else {
+            console.log('Student details are not saved');
+
+          }
+          this.cancel(); // Optionally cancel after saving
+        } catch (error) {
+          console.error('Error saving student details:', error);
+        }
+      },
+      (error) => {
+        console.error('Error fetching student profile:', error);
+      }
+    );
+  }
+
+  private handleInvalidCredentials() {
+    console.error('Invalid login credentials');
+    this.errorMessage = 'Invalid credentials, please try again.';
+  }
+
 
   // Register form submission logic
   register(registerForm: FormGroup) {

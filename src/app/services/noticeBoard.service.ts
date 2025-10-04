@@ -19,6 +19,7 @@ export class NoticeBoardService {
 
   ipAddress = this.appProp.getHostName;
   getAllApiURL = this.ipAddress + "/v1/noticeboard/getAllNotices";
+  schoolNoticeBoardOfBranchURL = this.ipAddress + "/v1/noticeboard/getNoticeBoardsByBranchId";
   saveApiURL = this.ipAddress + "/v1/noticeboard/saveNoticeBoard";
   deleteApiURL = this.ipAddress + "/v1/noticeboard/deleteNoticeBoardsByID";
   editApiURL = this.ipAddress + "/v1/noticeboard/editEvent";
@@ -39,6 +40,19 @@ export class NoticeBoardService {
         finalize(() => this.loadingComponent.dismissLoading())
       );
   }
+
+  getSchoolNoticeBoardOfBranch(branchId:string): Observable<SchoolNoticeBoard[]> {
+    this.loadingComponent.presentLoading('Fetching school notice board...');
+    console.log(this.schoolNoticeBoardOfBranchURL + '/' + branchId);
+    return this.http.get<SchoolNoticeBoard[]>(this.schoolNoticeBoardOfBranchURL + '/' + branchId)
+      .pipe(
+        tap(_ => console.log(`Fetched all school events successfully.`)),
+        catchError(this.handleError<SchoolNoticeBoard[]>('Error while getting school events')),
+        finalize(() => this.loadingComponent.dismissLoading())
+    );
+
+  }
+
 
   saveSchoolNoticeBoard(saveSchoolEvent: SchoolNoticeBoard): Observable<SchoolNoticeBoard[]> {
     this.loadingComponent.presentLoading('Saving school notice board...');

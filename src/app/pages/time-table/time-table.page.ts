@@ -4,7 +4,8 @@ import { SchoolTimetable } from 'src/app/dataDTO/schoolTimetable.data';
 import { ModalController } from '@ionic/angular';
 import { EventsformComponent } from '../../components/eventsform/eventsform.component';
 import { TimetableService } from '../../services/timetable.service';
-
+import { SchoolStudentProfile } from 'src/app/dataDTO/schoolStudentPriofile.data';
+import { StorageService } from '../../services/storage-service.service'; // Import your StorageService
 
 @Component({
   selector: 'app-time-table',
@@ -14,7 +15,8 @@ import { TimetableService } from '../../services/timetable.service';
 
 export class TimeTablePage implements OnInit {
 
-  constructor(private router: Router,private timetableService: TimetableService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private timetableService: TimetableService, private modalCtrl: ModalController,
+    private storageService: StorageService) { }
 
   
 
@@ -29,7 +31,7 @@ export class TimeTablePage implements OnInit {
   message = 'This modal example uses the modalController to present and dismiss modals.';
 
   ngOnInit() {
-    this.reFetchAllTimetable();
+    this.getAllSchoolTimetablesByBranchStd();
   }
 
   
@@ -50,32 +52,32 @@ export class TimeTablePage implements OnInit {
   async openEventModal() {
     const modal = await this.modalCtrl.create({
       component: EventsformComponent,
+      keyboardClose: true  // <-- Add here
     });
-    modal.present();
+    await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }
-    this.reFetchAllTimetable();
-
+    this.getAllSchoolTimetablesByBranchStd();
   }
 
   async openEditEventModal(schoolEventObj: SchoolTimetable) {
     const modal = await this.modalCtrl.create({
       component: EventsformComponent,
       componentProps: { data: schoolEventObj },
+      keyboardClose: true  // <-- Add here
     });
-    modal.present();
+    await modal.present();
 
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }
-    this.reFetchAllTimetable();
-
+    this.getAllSchoolTimetablesByBranchStd();
   }
 
   iterateSchoolEvents(schoolEventsList: any) {
@@ -99,7 +101,7 @@ export class TimeTablePage implements OnInit {
   deleteSchoolEvent(schoolEventId: string) {
     this.timetableService.deleteSchoolTimetable(schoolEventId).subscribe((data) => {
       console.log(data);
-      this.reFetchAllTimetable();
+      this.getAllSchoolTimetablesByBranchStd();
     });
   }
 
@@ -116,4 +118,17 @@ export class TimeTablePage implements OnInit {
   
 
 
+  async getAllSchoolTimetablesByBranchStd() {
+
+    const studentDetails = await this.storageService.getStudentDetails();
+    if (studentDetails) {
+
+      this.timetableService.getAllSchoolTimetablesByBranchStd(studentDetails.branchId, studentDetails.branchId).subscribe((data) => {
+        console.log(data);
+        this.schoolTimetableList = data;
+        //  this.iterateSchoolEvents(data);
+
+      });
+    }
+  }
 }

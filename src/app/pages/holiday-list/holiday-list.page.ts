@@ -4,7 +4,8 @@ import { HolidaysService } from '../../services/holidays.service';
 import { ModalController } from '@ionic/angular';
 import { HolidayFormComponent } from '../../components/holiday-form/holiday-form.component';
 import { SchoolHolidays  } from 'src/app/dataDTO/schoolHolidays.data';
-  
+import { StorageService } from '../../services/storage-service.service'; // Import your StorageService
+
 @Component({
   selector: 'app-holiday-list',
   templateUrl: './holiday-list.page.html',
@@ -12,12 +13,13 @@ import { SchoolHolidays  } from 'src/app/dataDTO/schoolHolidays.data';
 })
 export class HolidayListPage implements OnInit {
 
-  constructor(private router: Router, private holidaysService: HolidaysService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private holidaysService: HolidaysService, private modalCtrl: ModalController,
+    private storageService: StorageService) { }
   message = 'This modal example uses the modalController to present and dismiss modals.';
   schoolHolidayList: any;
 
   ngOnInit() {
-    this.reFetchAllHolidayList();
+    this.getAllHolidaysByBranchId();
     //this.getImageFromS3();
   }
 
@@ -53,7 +55,7 @@ export class HolidayListPage implements OnInit {
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }
-    this.reFetchAllHolidayList();
+    this.getAllHolidaysByBranchId();
 
   }
 
@@ -69,7 +71,7 @@ export class HolidayListPage implements OnInit {
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }
-    this.reFetchAllHolidayList();
+    this.getAllHolidaysByBranchId();
 
   }
 
@@ -88,6 +90,19 @@ export class HolidayListPage implements OnInit {
       //  this.iterateSchoolHolidays(data);
 
     });
+  }
+
+  async getAllHolidaysByBranchId() {
+
+    const studentDetails = await this.storageService.getStudentDetails();
+    if (studentDetails) {
+      this.holidaysService.getAllHolidaysByBranchId(studentDetails.branchId).subscribe((data) => {
+        console.log(data);
+        this.schoolHolidayList = data;
+        //  this.iterateSchoolHolidays(data);
+
+      });
+    }
   }
 
 

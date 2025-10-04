@@ -7,6 +7,7 @@ import { ApiService } from '../services/api.service';
 import { AppPropertiesService } from '../services/app-properties.service';
 import { LoadingComponent } from '../loading/loading.component'; // Import the LoadingComponent
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,7 @@ export class TimetableService {
 
   ipAddress = this.appProp.getHostName;
   getAllSchoolTimetableApiURL = this.ipAddress + "/v1/timetable/getAllTimetable";
+  getAllTimetableByBranchIdStdURL = this.ipAddress + "/v1/timetable/getAllTimetableByBranchIdStd";
   saveSchoolTimetableURL = this.ipAddress + "/v1/timetable/saveTimetable";
   deleteSchoolTimetableApiURL = this.ipAddress + "/v1/timetable/deleteTimetable";
   editSchoolTimetableApiURL = this.ipAddress + "/v1/timetable/saveTimetable";
@@ -27,6 +29,7 @@ export class TimetableService {
     private http: HttpClient,
     private appProp: AppPropertiesService,
     private loadingComponent: LoadingComponent // Inject LoadingComponent here
+   
   ) {
     this.ipAddress = appProp.getHostName;
   }
@@ -40,6 +43,19 @@ export class TimetableService {
         finalize(() => this.loadingComponent.dismissLoading()) // Ensure loading spinner is dismissed
       );
   }
+
+  getAllSchoolTimetablesByBranchStd(branchId: string, standaredId:string): Observable<SchoolTimetable[]> {
+    this.loadingComponent.presentLoading('Fetching school timetables...');
+    console.log(this.getAllTimetableByBranchIdStdURL + "/" + branchId + "/" + standaredId);
+    return this.http.get<SchoolTimetable[]>(this.getAllTimetableByBranchIdStdURL + "/" + branchId + "/" + standaredId)
+      .pipe(
+        tap(_ => console.log(`Fetched all school timetables successfully.`)),
+        catchError(this.handleError<SchoolTimetable[]>(`Error while getting all school timetables`)),
+        finalize(() => this.loadingComponent.dismissLoading()) // Ensure loading spinner is dismissed
+      );
+  }
+
+
 
   saveSchoolTimetable(saveSchoolTimetable: SchoolTimetable): Observable<SchoolTimetable[]> {
     console.log("Calling saveSchoolTimetable");

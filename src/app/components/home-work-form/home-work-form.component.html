@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true">
+  <form [formGroup]="homeWorkForm" (ngSubmit)="onSubmit()" class="form-container">
+
+   <ion-item>
+      <ion-label position="stacked">Homework ID</ion-label>
+      <ion-input formControlName="homeWorkId" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Academic Year</ion-label>
+      <ion-input formControlName="academicYear" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Standard ID</ion-label>
+      <ion-input formControlName="standardId" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Branch ID</ion-label>
+      <ion-input formControlName="branchId" type="text" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Subject ID</ion-label>
+      <ion-input formControlName="subjectId" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Date of Assignment</ion-label>
+      <ion-datetime formControlName="dateOfAssignment"
+                    presentation="date"
+                    prefer-wheel="false"
+                    display-format="YYYY-MM-DD"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">eDiary Details</ion-label>
+      <ion-textarea formControlName="eDairyDetails" autoGrow="true"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!homeWorkForm.valid">
+      {{ receivedData ? 'Update Homework' : 'Create Homework' }}
+    </ion-button>
+
+    <ion-button expand="block" color="danger" (click)="onDelete()" *ngIf="receivedData">
+      Delete Homework
+    </ion-button>
+
+    <ion-button expand="block" color="medium" (click)="cancel()">
+      Cancel
+    </ion-button>
+
+  </form>
+</ion-content>

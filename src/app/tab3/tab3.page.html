@@ -19,7 +19,7 @@
   
    
   
-  <div  class="img" [style.backgroundImage]="'url(https://schooledairyimagbucket.s3.ap-south-1.amazonaws.com/NLR001/2024/UKG/RoleNumber-002/RoleNumber-002.jpg)'">
+  <div  class="img" [style.backgroundImage]="'url(../assets/images/SchoolHomePage.png)'">
     <div class="icon">
       <ion-icon class="back" name="chevron-back-outline" (click)="goToBack()"></ion-icon>
     </div>
@@ -34,30 +34,30 @@
   <div class="main-content"   >
     <div class="uper_div">
       <div class="item">
-        <ion-label class="name">{{schoolStudentList.stNaame}}</ion-label>
+        <ion-label class="name">{{studentProfileDetais.stNaame}}</ion-label>
         <ion-badge class="badge">24 year</ion-badge>
       </div>
       <div class="item">
-        <ion-label class="text">{{schoolStudentList.stRollNo}}</ion-label>
+        <ion-label class="text">{{studentProfileDetais.stRollNo}}</ion-label>
       </div>
       <div class="line"></div>
       <div>
         <ion-icon class="icon" name="school-outline"></ion-icon>
-        <ion-label class="text">{{schoolStudentList.standardId}}</ion-label>
+        <ion-label class="text">{{studentProfileDetais.standardId}}</ion-label>
       </div>
 
       <div>
         <ion-icon class="icon" name="file-tray-outline"></ion-icon>
-        <ion-label class="text">Father Name: {{schoolStudentList.stFatherName}}</ion-label>
-        <ion-label class="text">   Mother Name: {{schoolStudentList.stMotherName}}</ion-label>
+        <ion-label class="text">Father Name: {{studentProfileDetais.stFatherName}}</ion-label>
+        <ion-label class="text">   Mother Name: {{studentProfileDetais.stMotherName}}</ion-label>
       </div>
       <div class="about">
         <div class="title">
           <ion-label>Address</ion-label>
-          <ion-label>{{schoolStudentList.stAddres1}}</ion-label>
-          <ion-label>  {{schoolStudentList.stAddres2}}</ion-label>
-          <ion-label>  {{schoolStudentList.stPincode}}</ion-label>
-          <ion-label>  Mobile: {{schoolStudentList.stPhoneNumber}}</ion-label>
+          <ion-label>{{studentProfileDetais.stAddres1}}</ion-label>
+          <ion-label>  {{studentProfileDetais.stAddres2}}</ion-label>
+          <ion-label>  {{studentProfileDetais.stPincode}}</ion-label>
+          <ion-label>  Mobile: {{studentProfileDetais.stPhoneNumber}}</ion-label>
         </div>
         <div class="text">
           <ion-label>hello everyone, this is john and this is details for testing. this is about text
@@ -67,7 +67,7 @@
 
       <ion-item class="ion-no-padding" lines="none">
         <ion-label class="text">Gender</ion-label>
-        <ion-label color="primary" slot="end">{{schoolStudentList.stGender}}</ion-label>
+        <ion-label color="primary" slot="end">{{studentProfileDetais.stGender}}</ion-label>
       </ion-item>
 
       <ion-item class="ion-no-padding" lines="none">

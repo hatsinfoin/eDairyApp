@@ -1,5 +1,64 @@
 .eDairyHeadderHomeIcon {
-    width: 50px; /* Set your desired width */
-    height: 50px; /* Set your desired height */
+  width: 50px;
+  height: 50px;
+}
+
+.timetable-container {
+  margin: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.timetable-header {
+  padding: 1rem 0;
+  text-align: center;
+  border-bottom: 2px solid #3880ff;
+  color: #3880ff;
+}
+
+.period-header-row {
+  background-color: #f0f4ff;
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+}
+
+.period-header {
+  text-align: center;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.day-row {
+  border-bottom: 1px solid #eee;
+}
+
+.day-name {
+  font-weight: 600;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  background-color: #fafafa;
+  border-right: 1px solid #eee;
+}
+
+.period-subject {
+  text-align: center;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .period-header, .period-subject {
+    font-size: 0.75rem;
+    padding: 0.25rem 0;
   }
-  
+
+  .day-name {
+    font-size: 0.85rem;
+  }
+}

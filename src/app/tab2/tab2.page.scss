@@ -1,0 +1,132 @@
+.landing-header {
+  ion-toolbar {
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    box-shadow: none;
+  }
+}
+
+.landing-page-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  margin: 20px 0;
+  opacity: 0;
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+.landing-content {
+  background: #f9f9f9;
+  padding: 0;
+}
+
+.hero-section {
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+  text-align: center;
+  padding: 50px 20px;
+  color: white;
+  animation: zoomIn 1s ease-out forwards;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  ion-button {
+    --border-radius: 25px;
+    font-weight: 600;
+  }
+}
+
+.landing-card {
+  margin: 20px 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+ion-card-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  font-size: 0.9rem;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 10px;
+  }
+}
+
+/* =====================
+   ANIMATIONS
+===================== */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Class triggers */
+.fade-in {
+  animation: fadeIn 1s ease forwards;
+}
+
+.fade-up {
+  animation: fadeUp 1s ease forwards;
+}
+
+.zoom-in {
+  animation: zoomIn 1s ease forwards;
+}
+
+.center-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

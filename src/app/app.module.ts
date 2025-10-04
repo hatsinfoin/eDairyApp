@@ -17,6 +17,8 @@ import { NotificationFormComponent } from './components/notification-form/notifi
 import { HolidayFormComponent } from './components/holiday-form/holiday-form.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { StudentFormComponent } from './components/student-form/student-form.component';
+import { HomeWorkFormComponent } from './components/home-work-form/home-work-form.component';
+
 
 import awsconfig from './aws-exports';
 
@@ -28,7 +30,8 @@ import awsconfig from './aws-exports';
     NotificationFormComponent,
     HolidayFormComponent,
     LoginFormComponent,
-    StudentFormComponent
+    StudentFormComponent,
+    HomeWorkFormComponent
   ],
   imports: [
     BrowserModule,

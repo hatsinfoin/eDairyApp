@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { SchoolStudentProfile } from 'src/app/dataDTO/schoolStudentPriofile.data'; 
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,19 @@ export class StorageService {
     await this.checkIfStorageInitialized(); // Check if the database is initialized
     return await this.storage.get('user'); // Retrieve user object from storage
   }
+
+  // Save user details in storage
+  async saveStudentDetails(student: SchoolStudentProfile): Promise<void> {
+    await this.checkIfStorageInitialized(); // Check if the database is initialized
+    await this.storage.set('student', student); // Save user object to local storage
+  }
+
+  // Get user details from storage
+  async getStudentDetails(): Promise<SchoolStudentProfile> {
+    await this.checkIfStorageInitialized(); // Check if the database is initialized
+    return await this.storage.get('student'); // Retrieve user object from storage
+  }
+
 
   // Remove user details from storage
   async removeUserDetails(): Promise<void> {

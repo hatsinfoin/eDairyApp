@@ -6,6 +6,7 @@ import {  OnInit } from '@angular/core';
 import { SchoolStudentProfile } from 'src/app/dataDTO/schoolStudentPriofile.data';
 import { ModalController } from '@ionic/angular';
 import { StudentFormComponent } from '../components/student-form/student-form.component';
+import { StorageService } from '../services/storage-service.service'; // Import your StorageService
 
 @Component({
   selector: 'app-tab3',
@@ -17,9 +18,12 @@ export class Tab3Page {
   constructor(private router: Router,
     private modalCtrl: ModalController,
     private stdProfileService: StudentProfileService,
-    private navCtrl: NavController) {}
+    private navCtrl: NavController,
+    private storageService: StorageService) { }
 
-    schoolStudentList: any;
+ 
+  studentProfileDetais: SchoolStudentProfile;
+
     message = 'This modal example uses the modalController to present and dismiss modals.';
   
   ngOnInit() {
@@ -31,7 +35,7 @@ export class Tab3Page {
     this.navCtrl.back();
   }
   goToEdit() {
-    this.openEditEventModal(this.schoolStudentList);
+    this.openEditEventModal(this.studentProfileDetais);
   }
   goToSetting() {
     this.router.navigate(['setting']);
@@ -71,13 +75,11 @@ export class Tab3Page {
 
   }
 
-  reFetchStudentProfile() {
-    this.stdProfileService.getSchoolStudentProfile("649c4ba3c6b74c004439ca1b").subscribe((data) => {
-      console.log(data);
-      this.schoolStudentList = data;
-      //  this.iterateSchoolEvents(data);
+  async reFetchStudentProfile() {
 
-    });
+    this.studentProfileDetais = await this.storageService.getStudentDetails();
+    console.log(this.studentProfileDetais);
+    
   }
 
 

@@ -7,25 +7,38 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./loading.component.scss'],
 })
 export class LoadingComponent {
-  private loading: any;
+  private loading: HTMLIonLoadingElement | null = null;
 
   constructor(private loadingController: LoadingController) { }
 
   // Show the loading spinner
   async presentLoading(message: string = 'Please wait...') {
+    // Prevent multiple spinners
+    if (this.loading) return;
+
     this.loading = await this.loadingController.create({
       message,
-      spinner: 'circles',  // Customize the spinner type
+      spinner: 'circles',
       translucent: true,
-      backdropDismiss: false,  // Don't dismiss when clicking outside
+      backdropDismiss: false,
+      keyboardClose: true, // ✅ Auto close keyboard when loading opens
     });
+
     await this.loading.present();
   }
 
   // Hide the loading spinner
   async dismissLoading() {
-    if (this.loading) {
-      await this.loading.dismiss();
+    try {
+      if (this.loading) {
+        const top = await this.loadingController.getTop();
+        if (top && top === this.loading) {
+          await this.loading.dismiss();
+        }
+        this.loading = null; // ✅ Clear after dismiss
+      }
+    } catch (err) {
+      console.error('Error dismissing loading:', err);
     }
   }
 }

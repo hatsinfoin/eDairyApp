@@ -1,52 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    
-     
-
     <ion-grid>
-      <ion-row>
-        <ion-col><ion-img (click)="routePage('landingPage')" class="eDairyHeadderHomeIcon"
-          src="../../assets/images/SchooleDairyIcon.png"></ion-img></ion-col>
-        <ion-col size="8" class="custom-col ion-text-center" >Holiday List</ion-col>
-        <ion-col></ion-col>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="2">
+          <ion-img class="eDairyHeaderIcon"
+                   src="../../assets/images/SchooleDairyIcon.png"
+                   (click)="routePage('landingPage')"
+                   aria-label="Home Icon">
+          </ion-img>
+        </ion-col>
+        <ion-col size="8" class="ion-text-center">
+          <ion-title class="page-title">Holiday List</ion-title>
+        </ion-col>
+        <ion-col size="2"></ion-col>
       </ion-row>
     </ion-grid>
-
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">holidayList</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
+<ion-content [fullscreen]="true" class="holiday-content">
 
-  <ion-card *ngFor="let holidayItem of schoolHolidayList;">
-    <ion-card-header>
-      <ion-card-title>Notice Title : {{holidayItem.holidayTitle}}</ion-card-title>
-      <ion-card-subtitle>Notice Department : {{holidayItem.holidayStartDate}}</ion-card-subtitle>
-       <ion-card-subtitle>Notice End Date: {{holidayItem.holidayEndDate}}</ion-card-subtitle>
-    </ion-card-header>
+  <div *ngFor="let holidayItem of schoolHolidayList" class="holiday-card">
+    <div class="card-header">
+      <div class="holiday-title">{{ holidayItem.holidayTitle }}</div>
+      <div class="holiday-date">{{ holidayItem.holidayDate | date: 'longDate' }}</div>
+    </div>
 
-    <ion-card-content>
-      {{holidayItem.holidayDiscription}}
+    <div class="card-body">
+      {{ holidayItem.holidayDiscription }}
+    </div>
 
-    </ion-card-content>
-
-
-    <ion-item>
-
-      <ion-icon slot="end" (click)="editSchoolHoliday(holidayItem)" expand="block" name="create"></ion-icon>
-      <ion-icon slot="end" (click)="duplicateSchoolHoliday(holidayItem)" expand="block" name="copy"></ion-icon>
-      <ion-icon slot="end" (click)="deleteSchoolHoliday(holidayItem.id)" expand="block" name="trash"></ion-icon>
-
-
-    </ion-item>
-
-  </ion-card>
-
-
+    <div class="card-actions">
+      <ion-icon name="create" (click)="editSchoolHoliday(holidayItem)" aria-label="Edit" class="action-icon"></ion-icon>
+      <ion-icon name="copy" (click)="duplicateSchoolHoliday(holidayItem)" aria-label="Duplicate" class="action-icon"></ion-icon>
+      <ion-icon name="trash" (click)="deleteSchoolHoliday(holidayItem.id)" aria-label="Delete" class="action-icon danger-icon"></ion-icon>
+    </div>
+  </div>
 
 </ion-content>

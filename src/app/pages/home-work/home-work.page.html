@@ -24,6 +24,12 @@
     </ion-segment-button>
   </ion-segment>
 
+  <ion-item *ngIf="(filteredHomeworkList() ?? []).length === 0">
+    <ion-label>
+      <h2>No homework for the selected day</h2>
+    </ion-label>
+  </ion-item>
+
   <!-- List of Homework items filtered by the selected subjectId -->
   <ion-list>
     <ion-item *ngFor="let homework of filteredHomeworkList()">
@@ -35,7 +41,19 @@
         <p><strong>Assigned On:</strong> {{ homework.dateOfAssignment }}</p>
         <p><strong>Details:</strong> {{ homework.eDairyDetails }}</p>
       </ion-label>
+
+      <ion-icon slot="end" (click)="sendCommunicaitonMessage(noticeItem.noticeDetails)" expand="block" name="notifications"></ion-icon>
+      <ion-icon slot="end" (click)="editSchoolNoticeBoard(homework)" expand="block" name="create"></ion-icon>
+      <ion-icon slot="end" (click)="duplicateSchoolNoticeBoard(homework)" expand="block" name="copy"></ion-icon>
+      <ion-icon slot="end" (click)="deleteHomeWork(homework.id)" expand="block" name="trash"></ion-icon>
+
+
     </ion-item>
   </ion-list>
+  <ion-list>
+  <ion-item>
 
+  <ion-icon   (click)="createSchoolNoticeBoard()" title="Create Homework" expand="block" name="create-outline"></ion-icon>
+  </ion-item>
+  </ion-list>
 </ion-content>

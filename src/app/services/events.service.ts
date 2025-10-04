@@ -18,6 +18,7 @@ export class EventsService {
 
   ipAddress = this.appProp.getHostName;
   getAllEventsApiURL = this.ipAddress + "/v1/events/getAllEvents";
+  getEventsByBranchIdURL = this.ipAddress + "/v1/events/getAllEventsByBranch";
   saveEventApiURL = this.ipAddress + "/v1/events/saveEvent";
   deleteEventApiURL = this.ipAddress + "/v1/events/deleteEvent";
   editEventApiURL = this.ipAddress + "/v1/events/editEvent";
@@ -31,6 +32,20 @@ export class EventsService {
   }
 
   // Get all school events
+  getEventsByBranchId(branchId:string): Observable<SchoolEvents[]> {
+    this.loadingComponent.presentLoading('Fetching events...');  // Show loading
+    console.log(this.getEventsByBranchIdURL + "/" + branchId);
+    return this.http.get<SchoolEvents[]>(this.getEventsByBranchIdURL + "/" + branchId, this.httpHeader)
+      .pipe(
+        tap(_ => console.log(`Fetched all school events successfully`)),
+        catchError(this.handleError<SchoolEvents[]>(`Error while fetching school events`)),
+        finalize(() => {
+          this.loadingComponent.dismissLoading();  // Dismiss loading after the request completes
+        })
+      );
+  }
+
+
   getSchoolEvents(): Observable<SchoolEvents[]> {
     this.loadingComponent.presentLoading('Fetching events...');  // Show loading
 

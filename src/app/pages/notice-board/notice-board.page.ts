@@ -7,6 +7,9 @@ import { ModalController } from '@ionic/angular';
 import { NotificationFormComponent } from '../../components/notification-form/notification-form.component';
 import { CommunicaitonMessageService } from '../../services/communicaitonMessage.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserRegistration } from 'src/app/dataDTO/UserRegistration.data'; SchoolStudentProfile
+import { SchoolStudentProfile } from 'src/app/dataDTO/schoolStudentPriofile.data'; 
+import { StorageService } from '../../services/storage-service.service'; // Import your StorageService
 
 @Component({
   selector: 'app-notice-board',
@@ -19,7 +22,9 @@ export class NoticeBoardPage implements OnInit {
   communicaitonMessage: CommunicaitonMessage;
   message = 'This modal example uses the modalController to present and dismiss modals.';
 
-  constructor(private router: Router, private noticeBoardService: NoticeBoardService, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private noticeBoardService: NoticeBoardService, private modalCtrl: ModalController,
+    private storageService: StorageService
+) { }
 
   ngOnInit() {
     this.reFetchAllNoticeBoard();
@@ -31,29 +36,40 @@ export class NoticeBoardPage implements OnInit {
     }
   }
 
-  reFetchAllNoticeBoard() {
+
+  async reFetchAllNoticeBoard() {
+
+    studentDetails: SchoolStudentProfile;
+
+    const studentDetails = await this.storageService.getStudentDetails();
+     if (studentDetails) {
+
+       this.noticeBoardService.getSchoolNoticeBoardOfBranch(studentDetails.branchId).subscribe((data) => {
+         console.log(data);
+
+         this.schoolNoticeBoardList = data;
+         //  this.iterateSchoolEvents(data);
+
+       },
+         (error: HttpErrorResponse) => {
+           // Handle error response
+           if (error.error instanceof ErrorEvent) {
+             // Client-side error
+             alert('An error occurred:' + error.error.message);
+           } else {
+             // Backend error
+             alert(
+               `Backend returned code ${error.status}, ` +
+               `body was: ${error.error}`
+             );
+           }
+         });
+
+     }
    
-    this.noticeBoardService.getSchoolNoticeBoard().subscribe((data) => {
-      console.log(data);
-
-      this.schoolNoticeBoardList = data;
-      //  this.iterateSchoolEvents(data);
-
-    },
-    (error: HttpErrorResponse) => {
-      // Handle error response
-      if (error.error instanceof ErrorEvent) {
-        // Client-side error
-        alert('An error occurred:'+ error.error.message);
-      } else {
-        // Backend error
-        alert(
-          `Backend returned code ${error.status}, ` +
-          `body was: ${error.error}`
-        );
-      }
-  });
+    
   }
+  
 
 
   deleteSchoolEvent(schoolEventId: string) {

@@ -14,6 +14,8 @@ export class HomeworkServiceService {
 
   ipAddress = this.appProp.getHostName;
   getAllHomeWorkApiURL = this.ipAddress + "/v1/homework/getAllHomeworks";
+  getHomeworksForSubForDayURL = this.ipAddress + "/v1/homework/getHomeworksForSubForDay";
+  getHomeworksDeleteURL = this.ipAddress + "/v1/homework/deleteHomeWork";
 
   constructor(
     private appProp: AppPropertiesService,
@@ -34,6 +36,30 @@ export class HomeworkServiceService {
       );
   }
 
+  deleteHomeWork(homeworkId : string) {
+
+    this.loadingComponent.presentLoading('Deleting homework list...');
+    console.log(this.getHomeworksDeleteURL + "/" + homeworkId);
+    return this.http.delete<Homework[]>(this.getHomeworksDeleteURL + "/" + homeworkId)
+      .pipe(
+        tap(_ => console.log(`Fetched all homework successfully.`)),
+        catchError(this.handleError<Homework[]>(`Error while getting homework list`)),
+        finalize(() => this.loadingComponent.dismissLoading()) // Dismiss loading once done
+      );
+}
+
+  getHomeworksForSubForDay(dateOfAssignment :string,branchId:string, standardId :string): Observable<Homework[]> {
+   // this.loadingComponent.presentLoading('Fetching homework list...');
+    console.log(this.getHomeworksForSubForDayURL + "/" + dateOfAssignment + "/" + branchId + "/" + standardId);
+    return this.http.get<Homework[]>(this.getHomeworksForSubForDayURL + "/" + dateOfAssignment + "/" + branchId + "/" + standardId)
+      .pipe(
+        tap(_ => console.log(`Fetched all homework successfully.`)),
+        catchError(this.handleError<Homework[]>(`Error while getting homework list`)),
+        finalize(() => this.loadingComponent.dismissLoading()) // Dismiss loading once done
+      );
+  }
+
+
   // Add more methods with similar structure here
   // Example:
   getHomeworkDetails(id: string): Observable<Homework> {
@@ -53,5 +79,16 @@ export class HomeworkServiceService {
       return of(result as T);
     };
   }
+
+  saveHomework(homework: Homework): Observable<any> {
+    this.loadingComponent.presentLoading('Saving homework...');
+    return this.http.post(`${this.ipAddress}/v1/homework/saveHomeWork`, homework)
+      .pipe(
+        tap(_ => console.log('Homework saved successfully.')),
+        catchError(this.handleError<any>('Error while saving homework')),
+        finalize(() => this.loadingComponent.dismissLoading())
+      );
+  }
+
 
 }

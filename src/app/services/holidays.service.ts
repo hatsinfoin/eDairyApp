@@ -18,12 +18,24 @@ export class HolidaysService {
 
   ipAddress = this.appProp.getHostName;
   getAllSchoolHolidaysApiURL = this.ipAddress + "/v1/holidayLists/getAllHollidays";
+  getAllHolidaysByBranchIdURL = this.ipAddress + "/v1/holidayLists/getAllHolidaysByBranchId";
   saveSchoolHolidaysURL = this.ipAddress + "/v1/holidayLists/saveHolidaysList";
   deleteSchoolHolidaysApiURL = this.ipAddress + "/v1/holidayLists/deleteHoliday";
   editSchoolHolidaysApiURL = this.ipAddress + "/v1/holidayLists/editHoliday";
 
   constructor(private apiService: ApiService, private http: HttpClient, private appProp: AppPropertiesService, private loadingComponent: LoadingComponent) {
     this.ipAddress = appProp.getHostName;
+  }
+
+  getAllHolidaysByBranchId(branchId:string): Observable<SchoolHolidays[]> {
+    this.loadingComponent.presentLoading('Fetching school holidays...');
+    console.log(this.getAllHolidaysByBranchIdURL + "/" + branchId);
+    return this.http.get<SchoolHolidays[]>(this.getAllHolidaysByBranchIdURL + "/" + branchId)
+      .pipe(
+        tap(_ => console.log(`Fetched all school holidays successfully.`)),
+        catchError(this.handleError<SchoolHolidays[]>('Error while getting school holidays')),
+        finalize(() => this.loadingComponent.dismissLoading())
+      );
   }
 
   getSchoolHolidayList(): Observable<SchoolHolidays[]> {

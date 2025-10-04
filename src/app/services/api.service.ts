@@ -12,7 +12,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  // apiURL = "http://192.168.0.105:8080/v1";
+  // apiURL = "http://10.224.209.254:8080/v1";
   apiURL = "http://192.168.0.105:8080/v1/Category/getProductsByCategory/JEWELLERY";
   constructor(
     private http: HttpClient

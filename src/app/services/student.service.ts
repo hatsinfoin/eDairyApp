@@ -19,6 +19,7 @@ export class StudentProfileService {
   ipAddress = this.appProp.getHostName;
   getAllStudentProfileApiURL = this.ipAddress + "/v1/students/findAllStudents";
   getStudentProfileByIdApiURL = this.ipAddress + "/v1/students/searchByStudentId";
+  getStudentProfileByRoleApiURL = this.ipAddress + "/v1/students/searchByStudentRoleNo";
   saveEventApiURL = this.ipAddress + "/v1/students/saveStudent";
   deleteEventApiURL = this.ipAddress + "/v1/students/deleteStudent";
   editEventApiURL = this.ipAddress + "/v1/students/editStudent";
@@ -43,15 +44,26 @@ export class StudentProfileService {
       );
   }
 
-  getSchoolStudentProfile(studentId: string): Observable<SchoolStudentProfile[]> {
+  getSchoolStudentProfile(studentId: string): Observable<SchoolStudentProfile> {
     this.loadingComponent.presentLoading('Fetching student profile...');
-    return this.http.get<SchoolStudentProfile[]>(this.getStudentProfileByIdApiURL + "/" + studentId)
+    return this.http.get<SchoolStudentProfile>(this.getStudentProfileByIdApiURL + "/" + studentId)
       .pipe(
         tap(_ => console.log(`Fetched student profile for ID: ${studentId}`)),
-        catchError(this.handleError<SchoolStudentProfile[]>(`Error while getting student profile by ID`)),
+        catchError(this.handleError<SchoolStudentProfile>(`Error while getting student profile by ID`)),
         finalize(() => this.loadingComponent.dismissLoading()) // Dismiss loading spinner
       );
   }
+
+  getSchoolStudentProfileByRole(studentId: string): Observable<SchoolStudentProfile> {
+    this.loadingComponent.presentLoading('Fetching student profile...');
+    return this.http.get<SchoolStudentProfile>(this.getStudentProfileByRoleApiURL + "/" + studentId)
+      .pipe(
+        tap(_ => console.log(`Fetched student profile for ID: ${studentId}`)),
+        catchError(this.handleError<SchoolStudentProfile>(`Error while getting student profile by ID`)),
+        finalize(() => this.loadingComponent.dismissLoading()) // Dismiss loading spinner
+      );
+  }
+
 
   saveSchoolStudentProfile(saveSchoolEvent: SchoolStudentProfile): Observable<SchoolStudentProfile[]> {
     console.log("Calling saveSchoolStudentProfile");
