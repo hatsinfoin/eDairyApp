@@ -2,7 +2,7 @@
   "name": "eDairyApp",
   "version": "0.0.1",
   "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "homepage": "https://hatsinfoin.github.io/eDairyApp",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
