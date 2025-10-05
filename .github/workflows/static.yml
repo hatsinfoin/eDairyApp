@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true  # <-- change false to true
 
 jobs:
   deploy:
@@ -36,7 +36,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './www'  # or your Ionic build output folder
+          path: './www'
+          artifact-name: 'github-pages-artifact'
+
 
       - name: Deploy to GitHub Pages
         id: deployment
